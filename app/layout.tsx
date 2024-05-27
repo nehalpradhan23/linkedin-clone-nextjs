@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import Header from "@/components/Header";
+import { ThemeProvider } from "@/components/theme/theme-provider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -16,12 +18,16 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>
-        {/* toaster */}
-        <header>{/* header */}</header>
-        <div className="">
-          <main>{children}</main>
-        </div>
+      <body className="min-h-screen flex flex-col">
+        <ThemeProvider attribute="class" defaultTheme="light">
+          {/* toaster */}
+          <header className="border-b sticky top-0 bg-white z-50">
+            <Header />
+          </header>
+          <div className="bg-gray-200 flex-1 w-full">
+            <main>{children}</main>
+          </div>
+        </ThemeProvider>
       </body>
     </html>
   );
