@@ -8,6 +8,8 @@ import {
   UsersIcon,
 } from "lucide-react";
 import Link from "next/link";
+import { SignInButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
+import { Button } from "./ui/button";
 
 function Header() {
   return (
@@ -53,7 +55,15 @@ function Header() {
         </Link>
 
         {/* user button */}
+        <SignedIn>
+          <UserButton />
+        </SignedIn>
         {/* sign in button */}
+        <SignedOut>
+          <Button asChild variant="secondary">
+            <SignInButton />
+          </Button>
+        </SignedOut>
       </div>
     </div>
   );
