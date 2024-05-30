@@ -7,7 +7,7 @@ if (!connectionString) {
 }
 
 // connect to database
-const connectDb = async () => {
+const connectDB = async () => {
   // check if already connected
   if (mongoose.connection?.readyState >= 1) {
     return;
@@ -20,3 +20,5 @@ const connectDb = async () => {
     console.log("Error connecting to MongoDB: ", error);
   }
 };
+
+export default connectDB;
