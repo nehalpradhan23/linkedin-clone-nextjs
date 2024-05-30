@@ -8,8 +8,8 @@ import { useRef, useState } from "react";
 import createPostAction from "@/actions/createPostAction";
 
 function PostForm() {
-  const ref = useRef<HTMLFormElement>(null);
-  const fileInputRef = useRef<HTMLInputElement>(null);
+  const ref = useRef<HTMLFormElement>(null); // form ref
+  const fileInputRef = useRef<HTMLInputElement>(null); // image ref
   const { user } = useUser();
   const [preview, setPreview] = useState<string | null>(null);
 
@@ -17,12 +17,14 @@ function PostForm() {
   const handlePostAction = async (formData: FormData) => {
     const formDataCopy = formData;
     ref.current?.reset();
+    // check for empty ===============
     const text = formDataCopy.get("postInput") as string;
     if (!text.trim()) {
       throw new Error("Post can't be empty");
     }
     setPreview(null);
     try {
+      // create post =============
       await createPostAction(formDataCopy);
     } catch (error) {
       console.log("Error creating post");

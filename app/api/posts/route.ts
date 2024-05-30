@@ -36,7 +36,6 @@ export async function POST(request: Request) {
 export async function GET() {
   try {
     await connectDB();
-
     const posts = await Post.getAllPosts();
 
     return NextResponse.json(posts);

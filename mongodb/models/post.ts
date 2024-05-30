@@ -24,6 +24,7 @@ interface IPostMethods {
   getAllComments(): Promise<IComment[]>;
   removePost(): Promise<void>;
 }
+
 // Define the static methods
 interface IPostStatics {
   getAllPosts(): Promise<IPostDocument[]>;
@@ -99,10 +100,10 @@ PostSchema.statics.getAllPosts = async function () {
 
     return posts.map((post: IPostDocument) => ({
       ...post,
-      _id: post.id.toString(),
+      _id: post._id.toString(),
       comments: post.comments?.map((comment: IComment) => ({
         ...comment,
-        _id: comment.id.toString(),
+        _id: comment._id.toString(),
       })),
     }));
   } catch (error) {
