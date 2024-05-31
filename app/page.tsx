@@ -1,7 +1,9 @@
 import UserInformation from "@/components/UserInformation";
+import PostFeed from "@/components/posts/PostFeed";
 import PostForm from "@/components/posts/PostForm";
 import connectDB from "@/mongodb/db";
 import { Post } from "@/mongodb/models/post";
+import { SignedIn } from "@clerk/nextjs";
 
 export const revalidate = 0;
 
@@ -18,8 +20,11 @@ export default async function Home() {
       </section>
       <section className="col-span-full md:col-span-6 xl:col-span-4 xl:max-w-xl mx-auto w-full">
         {/* post form */}
-        <PostForm />
+        <SignedIn>
+          <PostForm />
+        </SignedIn>
         {/* post feed */}
+        <PostFeed posts={posts} />
       </section>
       <section className="hidden xl:inline justify-center col-span-2">
         <div className="bg-red-300">hello</div>
