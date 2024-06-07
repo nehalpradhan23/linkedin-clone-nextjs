@@ -6,6 +6,8 @@ import { useEffect, useState } from "react";
 import { Button } from "../ui/button";
 import { MessageCircle, Repeat2, ThumbsUpIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { LikePostRequestBody } from "@/app/api/posts/[post_id]/like/route";
+import { UnlikePostRequestBody } from "@/app/api/posts/[post_id]/unlike/route";
 
 function PostOptions({ post }: { post: IPostDocument }) {
   const [isCommentOpen, setIsCommentOpen] = useState(false);
@@ -21,7 +23,51 @@ function PostOptions({ post }: { post: IPostDocument }) {
   }, [post, user]);
 
   // =====================================================
-  const likeOrUnlikePost = async () => {};
+  const likeOrUnlikePost = async () => {
+    if (!user?.id) {
+      throw new Error("User not Authenticated");
+    }
+    const originalLiked = liked;
+    const originalLikes = likes;
+
+    const newLikes = liked
+      ? likes?.filter((like) => like !== user.id)
+      : [...(likes ?? []), user.id];
+
+    const body: LikePostRequestBody | UnlikePostRequestBody = {
+      userId: user.id,
+    };
+
+    setLiked(!liked);
+    setLikes(newLikes);
+
+    const response = await fetch(
+      `/api/posts/${post._id}/${liked ? "unlike" : "like"}`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(body),
+      }
+    );
+    if (!response.ok) {
+      setLiked(originalLiked);
+      setLikes(originalLikes);
+      throw new Error("Failed to like or unlike post");
+    }
+
+    const fetchLikesResponse = await fetch(`/api/posts/${post._id}/like`);
+    if (!fetchLikesResponse.ok) {
+      setLiked(originalLiked);
+      setLikes(originalLikes);
+      throw new Error("Failed to fetch likes");
+    }
+
+    // get  new likes ========
+    const newLikesData = await fetchLikesResponse.json();
+    setLikes(newLikesData);
+  };
   // =====================================================
   return (
     <div>
@@ -29,7 +75,7 @@ function PostOptions({ post }: { post: IPostDocument }) {
         {/* likes -------------------- */}
         <div className="">
           {likes && likes.length > 0 && (
-            <p className="text-xs text-gray-50 cursor-pointer hover:underline">
+            <p className="text-xs text-gray-500 cursor-pointer hover:underline">
               {likes.length} likes
             </p>
           )}
