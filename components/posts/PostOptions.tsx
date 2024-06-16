@@ -1,13 +1,15 @@
 "use client";
 
 import { IPostDocument } from "@/mongodb/models/post";
-import { useUser } from "@clerk/nextjs";
+import { SignedIn, useUser } from "@clerk/nextjs";
 import { useEffect, useState } from "react";
 import { Button } from "../ui/button";
 import { MessageCircle, Repeat2, ThumbsUpIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { LikePostRequestBody } from "@/app/api/posts/[post_id]/like/route";
 import { UnlikePostRequestBody } from "@/app/api/posts/[post_id]/unlike/route";
+import CommentForm from "./CommentForm";
+import { CommentFeed } from "./CommentFeed";
 
 function PostOptions({ post }: { post: IPostDocument }) {
   const [isCommentOpen, setIsCommentOpen] = useState(false);
@@ -72,7 +74,7 @@ function PostOptions({ post }: { post: IPostDocument }) {
   return (
     <div>
       <div className="flex justify-between p-4">
-        {/* likes -------------------- */}
+        {/* likes count -------------------- */}
         <div className="">
           {likes && likes.length > 0 && (
             <p className="text-xs text-gray-500 cursor-pointer hover:underline">
@@ -80,7 +82,7 @@ function PostOptions({ post }: { post: IPostDocument }) {
             </p>
           )}
         </div>
-        {/* comments -------------------------- */}
+        {/* comments count -------------------------- */}
         <div className="">
           {post?.comments && post.comments.length > 0 && (
             <p
@@ -129,8 +131,8 @@ function PostOptions({ post }: { post: IPostDocument }) {
       {/* comment input =============================== */}
       {isCommentOpen && (
         <div className="p-4">
-          {/* {user?.id && <CommentForm postId={postId} />}
-          <CommentFeed post={post} /> */}
+          <SignedIn>{/* <CommentForm post={post} /> */}</SignedIn>
+          <CommentFeed post={post} />
         </div>
       )}
     </div>
