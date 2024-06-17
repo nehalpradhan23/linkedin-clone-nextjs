@@ -21,12 +21,12 @@ export const CommentFeed = ({ post }: { post: IPostDocument }) => {
               </AvatarFallback>
             </Avatar>
 
-            <div className="bg-gray-100 px-4 py-2 rounded-md w-full sm:w-auto md:min-w-[300px]">
+            <div className="bg-gray-100 px-4 py-2 rounded-md w-full md:min-w-[400px]">
               <div className="flex justify-between">
                 <div className="">
                   <p className="font-semibold">
-                    {comment.user.firstName} {comment.user.lastName}
-                    <Badge className="w">{isAuthor && "Author"}</Badge>
+                    {comment.user.firstName} {comment.user.lastName}{" "}
+                    <Badge className="text-xs">{isAuthor && "Author"}</Badge>
                   </p>
                   <p className="text-xs text-gray-400">
                     @{comment.user.firstName}
@@ -34,7 +34,7 @@ export const CommentFeed = ({ post }: { post: IPostDocument }) => {
                     {comment.user.userId.toString().slice(-4)}
                   </p>
                 </div>
-                <p className="text-xs text-gray-400">
+                <p className="text-xs text-gray-400 flex mt-1">
                   <ReactTimeago date={new Date(comment.createdAt)} />
                 </p>
               </div>
