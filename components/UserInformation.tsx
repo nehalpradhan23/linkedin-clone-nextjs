@@ -1,14 +1,15 @@
 import { currentUser } from "@clerk/nextjs/server";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
-import { User } from "lucide-react";
 import { SignInButton, SignedIn, SignedOut } from "@clerk/nextjs";
 import { Button } from "./ui/button";
 import { IPostDocument } from "@/mongodb/models/post";
 
 async function UserInformation({ posts }: { posts: IPostDocument[] }) {
   const user = await currentUser();
-  const firstName = user?.firstName;
-  const lastName = user?.lastName;
+
+  const firstName = user?.firstName as string;
+  const lastName = user?.lastName as string;
+  const imageUrl = user?.imageUrl as string;
 
   const userPosts = posts?.filter((post) => post.user.userId === user?.id);
 
@@ -23,13 +24,12 @@ async function UserInformation({ posts }: { posts: IPostDocument[] }) {
     <div className="flex bg-white flex-col justify-center items-center mr-6 rounded-lg border py-4">
       {/* user image ===== */}
       <Avatar>
-        {user?.id ? (
-          <AvatarImage src={user?.imageUrl} />
+        {user?.id && <AvatarImage src={imageUrl} />}
+        {/* {user?.id ? (
+          <AvatarImage src={imageUrl} />
         ) : (
-          <AvatarImage>
-            <User />
-          </AvatarImage>
-        )}
+          <AvatarImage src="https://github.com/shadcn.png" />
+        )} */}
         <AvatarFallback>
           {firstName?.charAt(0)}
           {lastName?.charAt(0)}

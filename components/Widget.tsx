@@ -9,7 +9,7 @@ function Widget() {
         <div className="rounded-full h-24 w-24 relative overflow-hidden">
           <Image
             src="/myImage.JPG"
-            alt="my image"
+            alt="myimage"
             height={200}
             width={200}
             className="h-full object-cover"
