@@ -22,6 +22,7 @@ function Widget() {
           <Link
             className="underline text-blue-600 hover:text-gray-600"
             href={"https://nehal-pradhan-portfolio.vercel.app/"}
+            target="_blank"
           >
             My Portfolio
           </Link>
@@ -42,6 +43,7 @@ function Widget() {
           <Link
             className="underline text-blue-600 hover:text-gray-600"
             href={"https://www.linkedin.com/in/nehalpradhan22/"}
+            target="_blank"
           >
             nehal pradhan
           </Link>

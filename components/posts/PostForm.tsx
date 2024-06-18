@@ -7,6 +7,7 @@ import { ImageIcon, XIcon } from "lucide-react";
 import { useRef, useState } from "react";
 import createPostAction from "@/actions/createPostAction";
 import { toast } from "sonner";
+import Image from "next/image";
 
 function PostForm() {
   const ref = useRef<HTMLFormElement>(null); // form ref
@@ -88,7 +89,9 @@ function PostForm() {
         {/* preview image conditional check */}
         {preview && (
           <div className="mt-3 h-[300px] object-contain overflow-hidden border">
-            <img
+            <Image
+              width={500}
+              height={500}
               src={preview}
               alt="Preview"
               className="w-full object-contain h-full"
