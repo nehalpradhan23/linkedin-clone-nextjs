@@ -100,6 +100,7 @@ function PostOptions({ post }: { post: IPostDocument }) {
           variant="ghost"
           className="postButton"
           onClick={likeOrUnlikePost}
+          disabled={!user}
         >
           <ThumbsUpIcon
             className={cn("mr-1", liked && "text-blue-500 fill-blue-500")}

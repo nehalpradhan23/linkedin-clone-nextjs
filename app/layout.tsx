@@ -4,6 +4,7 @@ import "./globals.css";
 import Header from "@/components/Header";
 import { ThemeProvider } from "@/components/theme/theme-provider";
 import { ClerkProvider } from "@clerk/nextjs";
+import { Toaster } from "@/components/ui/sonner";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -23,11 +24,12 @@ export default function RootLayout({
         <body className="min-h-screen flex flex-col">
           <ThemeProvider attribute="class" defaultTheme="light">
             {/* toaster */}
+            <Toaster position="bottom-left" />
             <header className="border-b sticky top-0 bg-white z-50">
               <Header />
             </header>
             <div className="bg-gray-200 flex-1 w-full">
-              <main>{children}</main>
+              <main className="max-w-6xl mx-auto">{children}</main>
             </div>
           </ThemeProvider>
         </body>
